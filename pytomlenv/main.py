@@ -67,4 +67,7 @@ def load_env(path: str = ".env.toml", override: bool = False) -> EnvObject:
     env_name = os.environ["ENV"]
     if env_name not in data:
         raise TomlEnvError(f"ENV '{env_name}' not found in {path}")
-    return EnvObject(data[env_name], override=override)
+    env = EnvObject(data[env_name], override=override)
+    for key, val in env.data.items():
+        os.environ[key] = str(val)
+    return env

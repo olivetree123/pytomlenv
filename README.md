@@ -43,15 +43,19 @@ from toml_env import load_env
 
 env = load_env(".env.toml")
 
-project = env.get("PROJECT")
-db_name = env.get_str("DB_NAME")
-db_user = env.get_str("DB_USER", "root")
-db_pass = env.get_str("DB_PASS", "password")
-db_host = env.get_str("DB_HOST", "localhost")
-db_port = env.get_int("DB_PORT", 3306)
+# `os.environ.get()` also works, but it always return string
 
-debug = env.get_bool("DEBUG", False)
-sentry_dsn = env.get_str("SENTRY_DSN", None, nullable=True)
+# you have better choice with the following methods：
+
+project: str = env.get("PROJECT")
+db_name: str = env.get_str("DB_NAME")
+db_user: str = env.get_str("DB_USER", "root")
+db_pass: str = env.get_str("DB_PASS", "password")
+db_host: str = env.get_str("DB_HOST", "localhost")
+db_port: int = env.get_int("DB_PORT", 3306)
+
+debug: bool = env.get_bool("DEBUG", False)
+sentry_dsn: str = env.get_str("SENTRY_DSN", None, nullable=True)
 
 print(debug, db_name, db_user, db_pass, db_host, db_port, sentry_dsn)
 ```
